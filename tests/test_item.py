@@ -22,3 +22,19 @@ def test_apply_discount(data):
 	Item.pay_rate = 0.8
 	data.apply_discount()
 	assert data.price == 8000.0
+
+
+def test_repr():
+	item1 = Item("Смартфон", 10000, 20)
+	assert repr(item1) == "Item('Смартфон', 10000, 20)"
+
+
+def test_srt():
+	item1 = Item("Смартфон", 10000, 20)
+	assert item1.name == 'Смартфон'
+
+
+def test_string_to_number():
+	assert Item.string_to_number('5') == 5
+	assert Item.string_to_number('5.0') == 5
+	assert Item.string_to_number('5.5') == 5
