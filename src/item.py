@@ -44,16 +44,17 @@ class Item:
 
     @name.setter
     def name(self, name: str):
-        self.validate_name()
+        self.validate_name(name)
         self.__name = name
 
-    def validate_name(self):
-        if len(self.name) >= 10:
-            print(f'{self.__name} or {self.name}')
-            raise ValueError('Длина наименования товара превышает 10 символов.')
+    @classmethod
+    def validate_name(cls, name):
+        if len(name) >= 10:
+            raise ValueError(f'"{name}" Длина наименования товара превышает 10 символов.')
 
     @classmethod
     def instantiate_from_csv(cls):
+        cls.all.clear()
         with open(PATH_CSV, encoding='cp1251', mode='r') as csvfile:
             reader = DictReader(csvfile)
             for row in reader:
@@ -74,29 +75,3 @@ class Item:
         if not isinstance(other, Item):
             raise ValueError
         return self.quantity + other.quantity
-
-
-if __name__ == '__main__':
-    item1 = Item("Смартфон", 10000, 20)
-    assert repr(item1) == "Item('Смартфон', 10000, 20)"
-    assert str(item1) == 'Смартфон'
-
-    item = Item('Телефон', 10000, 5)
-
-    # длина наименования товара меньше 10 символов
-    item.name = 'Смартфон'
-    assert item.name == 'Смартфон'
-
-    # длина наименования товара больше 10 символов
-    # item.name = 'СуперСмартфон'
-    # Exception: Длина наименования товара превышает 10 символов.
-
-    Item.instantiate_from_csv()  # создание объектов из данных файла
-    # assert len(Item.all) == 6  # в файле 5 записей с данными по товарам
-
-    item1 = Item.all[0]
-    assert item1.name == 'Смартфон'
-
-    assert Item.string_to_number('5') == 5
-    assert Item.string_to_number('5.0') == 5
-    assert Item.string_to_number('5.5') == 5
