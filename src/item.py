@@ -73,5 +73,5 @@ class Item:
 
     def __add__(self, other):
         if not isinstance(other, Item):
-            raise ValueError
+            raise ValueError('сложение по количеству товара в магазине')
         return self.quantity + other.quantity

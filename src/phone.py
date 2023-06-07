@@ -22,5 +22,7 @@ class Phone(Item):
 if __name__ == '__main__':
 	phone1 = Phone("iPhone 14", 120_000, 5, 2)
 	item1 = Item("Смартфон", 10000, 20)
+	print(phone1)
 	print(phone1.__repr__())
 	print(item1 + phone1)
+	# Phone("iPhone 14", 120_000, 5, 0)
