@@ -5,10 +5,20 @@ class Phone(Item):
 	def __init__(self, name: str, price: int | float, quantity: int, number_of_sim: int):
 		super().__init__(name, price, quantity)
 		self.number_of_sim = number_of_sim
-		self.validate_number_of_sim()
 
-	def validate_number_of_sim(self):
-		if self.number_of_sim < 1:
+	@property
+	def number_of_sim(self):
+		print('getter number_of_sim')
+		return self.__number_of_sim
+
+	@number_of_sim.setter
+	def number_of_sim(self, number_of_sim):
+		self.validate_number_of_sim(number_of_sim)
+		self.__number_of_sim = number_of_sim
+
+	@classmethod
+	def validate_number_of_sim(cls, number_of_sim):
+		if number_of_sim < 1:
 			raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля.')
 
 	def __repr__(self):
@@ -20,9 +30,10 @@ class Phone(Item):
 
 
 if __name__ == '__main__':
-	phone1 = Phone("iPhone 14", 120_000, 5, 2)
+	phone1 = Phone("iPhone 14", 120_000, 5, 0)
 	item1 = Item("Смартфон", 10000, 20)
-	print(phone1)
+	# phone1.number_of_sim = 0
+	print('number_of_sim', phone1.number_of_sim)
 	print(phone1.__repr__())
 	print(item1 + phone1)
 	# Phone("iPhone 14", 120_000, 5, 0)

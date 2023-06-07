@@ -22,3 +22,8 @@ def test_repr(data):
 
 def test_srt(data):
 	assert str(data) == 'iPhone 14'
+
+
+def test_validate_number_of_sim_setter(data):
+	with pytest.raises(ValueError):
+		data.number_of_sim = 0
