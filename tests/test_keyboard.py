@@ -18,8 +18,11 @@ def test_change_lang(kb):
 
 
 def test_change_lang_change_lang(kb):
+	"""
+	Сделали RU -> EN -> RU
+	"""
 	kb.change_lang().change_lang()
-	assert str(kb.language) == "EN"
+	assert str(kb.language) == "RU"
 
 
 def test_language_setter(kb):
