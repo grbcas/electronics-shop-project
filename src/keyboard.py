@@ -1,39 +1,24 @@
+from collections import deque
+
 from src.item import *
 
+
 class MixinLanguage:
+
+	_languages = deque(('EN', 'RU'))
+	_language: str = 'EN'
+
 	def change_lang(self):
-		print(self.__dict__)
-		if self.language == 'EN':
-			self.__language = 'RU'
-		else:
-			self.__language = 'EN'
-		print('MixinLanguage', self.__dict__)
+		self._languages.rotate()
+		self._language = self._languages[0]
 		return self
 
 
 class Keyboard(MixinLanguage, Item):
-	def __init__(self, *args):
-		super().__init__(*args)
-		self.__language = 'EN'
 
 	@property
 	def language(self):
-		return self.__language
-
-
-# class Keyboard(MixinLanguage, Item):
-# 	def __init__(self, *args):
-# 		super().__init__(*args)
-# 		self.__language = MixinLanguage.mixin_language
-
-	# @property
-	# def language(self):
-	# 	print(self.__language)
-	# 	return self.__language
-
-# @language.setter
-# def language(self, language):
-# 	self.__language = language
+		return self._language
 
 
 if __name__ == '__main__':
@@ -49,7 +34,7 @@ if __name__ == '__main__':
 	kb.change_lang().change_lang()
 	assert str(kb.language) == "RU"
 
-	kb.language = 'CH'
+	# kb.language = 'CH'
 	# # AttributeError: property 'language' of 'KeyBoard' object has no setter
 	print(kb.language)
 	print(kb.__dict__)
