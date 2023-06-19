@@ -2,7 +2,9 @@
 import pytest
 from src.item import *
 
-PATH_CSV = Path(Path(__file__), 'data', 'items.csv')
+path_csv_test = Path(Path(__file__).parent, 'data', 'test_items.csv')
+path_csv_no_file = Path(Path(__file__).parent, 'data', '_items.csv')
+path_csv_damaged_file = Path(Path(__file__).parent, 'data', 'test_items_damaged.csv')
 
 
 @pytest.fixture
@@ -51,9 +53,19 @@ def test_validate_name(data):
 
 
 def test_instantiate_from_csv():
-	Item.instantiate_from_csv()
+	Item.instantiate_from_csv(path_csv=path_csv_test)
 	assert len(Item.all) == 5
 
 
 def test_add():
 	pass
+
+
+def test_instantiate_from_csv_no_file():
+	with pytest.raises(FileNotFoundError):
+		Item.instantiate_from_csv(path_csv=path_csv_no_file)
+
+
+def test_instantiate_from_damaged_file():
+	with pytest.raises(InstantiateCSVError):
+		Item.instantiate_from_csv(path_csv=path_csv_damaged_file)
